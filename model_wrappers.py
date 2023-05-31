@@ -20,7 +20,9 @@ class LinearModel():
             self.model = sm.OLS(self.y, sm.add_constant(self.X))
         
         self.X = pd.DataFrame(self.model.exog, columns=self.model.exog_names, index=self.dataset.index)
+        self.features_names = self.model.exog_names
         self.y = pd.Series(self.model.endog, name=self.model.endog_names, index=self.dataset.index)
+        self.response_name = self.model.endog_names
 
         self.model = self.model.fit()
         self.model_summary = self.model.get_prediction().summary_frame(alpha=0.05).iloc[self.y.argsort()]
