@@ -11,7 +11,7 @@ class LinearModel():
         self.model = None
         self.results = None
 
-    def fit(self, formula=None, feature_columns_idx=None):
+    def fit(self, formula=None, feature_columns_idx=None, verbose=False):
         if formula:
             self.model = smf.ols(formula=formula, data=self.dataset)
         elif feature_columns_idx:
@@ -26,7 +26,8 @@ class LinearModel():
 
         self.model = self.model.fit()
         self.model_summary = self.model.get_prediction().summary_frame(alpha=0.05).iloc[self.y.argsort()]
-        print(self.model.summary())
+        if verbose:
+            print(self.model.summary())
         self.is_fitted = True
         
         self.regressionline = sm.OLS(self.model.fittedvalues, sm.add_constant(self.y))
