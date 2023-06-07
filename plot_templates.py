@@ -1,7 +1,6 @@
 import numpy as np
 import pandas as pd
 import seaborn as sns
-from matplotlib.offsetbox import AnchoredText
 
 def plot_training_set(ax,x,y, highlights=None):
     if highlights:
@@ -96,22 +95,3 @@ def add_plot_legend(ax):
         handletextpad=0.1,
         columnspacing=0.5,
     )
-
-def add_model_statistics(ax,statistics):
-    strings_statistics = []
-    for k,v in statistics.items():
-        strings_statistics.append("{:<15}{:>6.3f}".format(k,v))
-
-    metrics_box = AnchoredText(
-        "\n".join(strings_statistics),
-        loc='upper left',
-        pad=1,
-        frameon=False,
-        prop={
-            'horizontalalignment':'left',
-            'fontsize':8,
-            'fontfamily':'monospace',
-            'bbox':dict(facecolor='white',alpha=0.5)
-        }
-    )
-    ax.add_artist(metrics_box)
