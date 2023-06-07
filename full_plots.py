@@ -1,7 +1,7 @@
 from .model_wrappers import LinearModel
 from .plot_templates import *
 from .internal_validation import *
-from .tools import connect_cursors
+from .tools import *
 
 import mplcursors
 
