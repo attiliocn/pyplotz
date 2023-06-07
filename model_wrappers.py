@@ -19,9 +19,9 @@ class LinearModel():
         else:
             self.model = sm.OLS(self.y, sm.add_constant(self.X))
         
-        self.X = pd.DataFrame(self.model.exog, columns=self.model.exog_names, index=self.dataset.index)
+        self.X_model = pd.DataFrame(self.model.exog, columns=self.model.exog_names, index=self.dataset.index)
         self.features_names = self.model.exog_names
-        self.y = pd.Series(self.model.endog, name=self.model.endog_names, index=self.dataset.index)
+        self.y_model = pd.Series(self.model.endog, name=self.model.endog_names, index=self.dataset.index)
         self.response_name = self.model.endog_names
 
         self.model = self.model.fit()
@@ -30,6 +30,9 @@ class LinearModel():
             print(self.model.summary())
         self.is_fitted = True
         
-        self.regressionline = sm.OLS(self.model.fittedvalues, sm.add_constant(self.y))
-        self.regressionline = self.regressionline.fit()
-        self.regressionline_summary = self.regressionline.get_prediction().summary_frame(alpha=0.05).iloc[self.y.argsort()]
+        if len(self.X.shape) == 1 or self.X.shape[-1] == 1:
+            self.regressionline_summary = self.model_summary
+        else:
+            self.regressionline = sm.OLS(self.model.fittedvalues, sm.add_constant(self.y))
+            self.regressionline = self.regressionline.fit()
+            self.regressionline_summary = self.regressionline.get_prediction().summary_frame(alpha=0.05).iloc[self.y.argsort()]
