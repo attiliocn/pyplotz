@@ -35,5 +35,5 @@ def add_model_statistics(ax,statistics, loc='upper left'):
 def add_labels(x, y, labels, ax):
     texts = []
     for xi,yi,label in zip(x,y,labels):
-        texts.append(plt.text(xi,yi,label,fontsize=8))   
-    adjust_text(texts)
+        texts.append(ax.text(xi,yi,label,fontsize=8))   
+    adjust_text(texts, ax=ax)
